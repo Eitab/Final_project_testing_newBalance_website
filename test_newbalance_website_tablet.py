@@ -30,7 +30,7 @@ def driver():
     ser_firefox = FirefoxService(Firefox_driver_binary)
     driver = webdriver.Firefox(service=ser_firefox, options=fire_fox_options)
     yield driver
-    # driver.close()
+    driver.close()
 
 def test_registeration(driver):
     driver.get("https://www.newbalance.com/")
@@ -45,7 +45,7 @@ def test_registeration(driver):
     time.sleep(5)
     driver.find_element(By.CSS_SELECTOR, "#registration-form-fname").send_keys("Eitab")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-lname").send_keys("Keis")
-    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("cenobik493@runqx.com")
+    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("cenhobik493@runqx.com")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-password").send_keys("Eitabkeis123#")
     driver.execute_script(
         "document.getElementsByName('dwfrm_profile_customer_registerTermsAndConditions')[0].setAttribute('checked', 'true')")
@@ -132,17 +132,19 @@ def test_search_product(driver):
     e = driver.find_element(By.CSS_SELECTOR, "#discountPopUpCloseBtn > img:nth-child(1)") # x
     actions = ActionChains(driver)
     actions.move_to_element(e).click().perform()
-
-    second_hat=driver.find_element(By.CSS_SELECTOR,"div.pgptiles:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)").text
+    time.sleep(3)
+    driver.find_element(By.CSS_SELECTOR,"div.pgptiles:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)").click()
+    hat_name=driver.find_element(By.CSS_SELECTOR,"h1.font-header-1").text
     driver.find_element(By.CSS_SELECTOR, ".container > .site-search .form-control").clear()
     time.sleep(2)
-    driver.find_element(By.CSS_SELECTOR, ".container > .site-search .form-control").send_keys(second_hat)
+    driver.find_element(By.CSS_SELECTOR, ".container > .site-search .form-control").send_keys(hat_name)
     time.sleep(2)
     driver.find_element(By.CSS_SELECTOR,"a.button-primary").click()
     time.sleep(3)
-    hat_res=driver.find_element(By.XPATH,"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div[4]/div[5]/div[1]/div/div/div[2]/div[1]/div[1]/div/a").text
+    driver.find_element(By.CSS_SELECTOR,".image-container > a:nth-child(1)").click()
+    hat_res=driver.find_element(By.CSS_SELECTOR,"h1.font-header-1").text
     time.sleep(3)
-    assert hat_res == second_hat
+    assert hat_res == hat_name
 
 
 # Test Case 6.1 - Automate end-to-end "Buy Product" feature of the e-commerce website.
@@ -165,7 +167,7 @@ def test_buy_product(driver):
     time.sleep(2)
     driver.find_element(By.CSS_SELECTOR, "#hamburger-icon-custom").click()
     time.sleep(2)
-    driver.find_element(By.XPATH,"//a[@id='2000']/span").click() #women
+    driver.find_element(By.ID, "2000").click() #women
     driver.find_element(By.ID,"25000").click() #clothes
     driver.find_element(By.ID,"25016").click() #shirts
     driver.find_element(By.CSS_SELECTOR, ".pgptiles:nth-child(4) .tile-image").click()  # 4 tshirt
@@ -181,6 +183,7 @@ def test_buy_product(driver):
     my_quan.select_by_visible_text('2')
     time.sleep(3)
     driver.find_element(By.LINK_TEXT, "Checkout").click()
+    driver.find_element(By.CSS_SELECTOR, ".mt-2 .form-control-label").click()
     time.sleep(3)
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_firstName").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_firstName").send_keys("Eitab")
@@ -251,7 +254,7 @@ def test_total_price(driver):
     time.sleep(2)
     driver.find_element(By.CSS_SELECTOR, "#hamburger-icon-custom").click()
     time.sleep(2)
-    driver.find_element(By.XPATH, "//a[@id='2000']/span").click()  # women
+    driver.find_element(By.ID, "2000").click()  # women
     driver.find_element(By.ID, "25000").click()  # clothes
     driver.find_element(By.ID, "25016").click()  # shirts
     driver.find_element(By.CSS_SELECTOR, ".pgptiles:nth-child(4) .tile-image").click()  # 4 tshirt

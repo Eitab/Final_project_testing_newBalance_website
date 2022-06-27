@@ -43,15 +43,15 @@ def test_registeration(driver):
     time.sleep(2)
     driver.find_element(By.CSS_SELECTOR, "#registration-form-fname").send_keys("Eitab")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-lname").send_keys("Keis")
-    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("cazay9968@syswift.com")
+    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("caway99ggg88@syswift.com")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-password").send_keys("Eitabkeis123#")
     time.sleep(5)
     driver.execute_script(
         "document.getElementsByName('dwfrm_profile_customer_registerTermsAndConditions')[0].setAttribute('checked', 'true')")
     driver.find_element(By.CSS_SELECTOR, "#register > form > button").click()
-    time.sleep(10)
+    time.sleep(5)
     user_message = driver.find_element(By.CSS_SELECTOR, ".account-links > div:nth-child(1) > div:nth-child(1) > a:nth-child(1) > span:nth-child(2) > span:nth-child(1)").text
-    time.sleep(10)
+    time.sleep(5)
     assert "Hello Eitab," == user_message
 
 def test_failed_login(driver):
@@ -134,15 +134,18 @@ def test_search_product(driver):
     actions = ActionChains(driver)
     actions.move_to_element(e).click().perform()
     time.sleep(3)
-    second_hat = driver.find_element(By.CSS_SELECTOR,
-                                     "div.pgptiles:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)").text
+    driver.find_element(By.CSS_SELECTOR,
+                                     "#product-search-results > div > div.pgp-grids.col-12.col-lg-9.pr-lg-0 > div.row.product-grid > div:nth-child(1) > div > div > div.image-container > a").click()
+    time.sleep(3)
+    hat_name=driver.find_element(By.CSS_SELECTOR,"#productDetails > div.col-lg-12.col-12.p-0.d-none.d-lg-block.mb-2 > div:nth-child(2) > div > h1").text
     driver.find_element(By.NAME, "q").clear()
-    driver.find_element(By.NAME, "q").send_keys(second_hat)
+    driver.find_element(By.NAME, "q").send_keys(hat_name)
     driver.find_element(By.CSS_SELECTOR, ".search .search-button > .icon").click()
     time.sleep(3)
-    hat_res=driver.find_element(By.XPATH,"//*[@id='product-search-results']/div/div[4]/div[5]/div[1]/div/div/div[2]/div[1]/div[1]/div/a").text
+    driver.find_element(By.CSS_SELECTOR,"#product-search-results > div > div.pgp-grids.col-12.col-lg-9.pr-lg-0 > div.row.product-grid > div.pgptiles.col-6.col-lg-4.px-1.px-lg-2 > div > div > div.image-container > a").click()
+    res_hat_name=driver.find_element(By.CSS_SELECTOR,"h1.hidden-sm-down").text
     time.sleep(3)
-    assert hat_res == second_hat
+    assert res_hat_name== hat_name
 
 
 # Test Case 6.1 - Automate end-to-end "Buy Product" feature of the e-commerce website.
@@ -154,6 +157,11 @@ def test_buy_product(driver):
     driver.find_element(By.CSS_SELECTOR, "#login-form-email").send_keys("itab.keis@gmail.com")
     driver.find_element(By.CSS_SELECTOR, "#login-form-password").send_keys("Eitabkeis123#")
     time.sleep(5)
+    e = driver.find_element(By.CSS_SELECTOR, "#discountPopUpCloseBtn > img:nth-child(1)")
+    time.sleep(3)
+    actions = ActionChains(driver)
+    actions.move_to_element(e).click().perform()
+    time.sleep(3)
     driver.find_element(By.CSS_SELECTOR, "#login > form > button").click()
     time.sleep(5)
     women_element = driver.find_element(By.ID, "2000")
@@ -161,11 +169,7 @@ def test_buy_product(driver):
     actions.move_to_element(women_element).perform()
     time.sleep(3)
     driver.find_element(By.ID, "25016").click()  # shirt catageroy
-    time.sleep(3)
-    e = driver.find_element(By.CSS_SELECTOR, "#discountPopUpCloseBtn > img:nth-child(1)")
-    time.sleep(3)
-    actions = ActionChains(driver)
-    actions.move_to_element(e).click().perform()
+
     time.sleep(3)
     driver.find_element(By.CSS_SELECTOR,".pgptiles:nth-child(4) .tile-image").click() # 4 tshirt
     time.sleep(3)
@@ -182,19 +186,31 @@ def test_buy_product(driver):
     time.sleep(3)
     driver.find_element(By.LINK_TEXT,"Checkout").click()
     time.sleep(3)
+    driver.find_element(By.CSS_SELECTOR,".mt-2 .form-control-label").click()
+    time.sleep(3)
+    driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_firstName").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_firstName").send_keys("Eitab")
     time.sleep(2)
+    driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_lastName").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_lastName").send_keys("Keis")
     time.sleep(2)
+    driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_address1").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_address1").send_keys("Herzl Way")
     time.sleep(2)
+    driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_city").clear()
     driver.find_element(By.NAME,"dwfrm_shipping_shippingAddress_addressFields_city").send_keys("Beverly Hills")
     time.sleep(2)
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_states_stateCode").click()
     dropdown = driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_states_stateCode")
     dropdown.find_element(By.XPATH, "//option[. = 'California']").click()
+
+    driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_postalCode").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_postalCode").send_keys("90211")
+
+    driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_phone").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_phone").send_keys("(054) 628-8867")
+
+    driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_email").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_email").send_keys("itab.keis@gmail.com")
     time.sleep(3)
     driver.find_element(By.NAME,"submit").click()

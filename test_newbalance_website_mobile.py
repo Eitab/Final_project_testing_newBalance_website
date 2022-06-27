@@ -31,7 +31,7 @@ def driver():
     ser_firefox = FirefoxService(Firefox_driver_binary)
     driver = webdriver.Firefox(service=ser_firefox, options=fire_fox_options)
     yield driver
-    # driver.close()
+    driver.close()
 
 
 def test_registeration(driver):
@@ -46,7 +46,7 @@ def test_registeration(driver):
     time.sleep(5)
     driver.find_element(By.CSS_SELECTOR,"#registration-form-fname").send_keys("Eitab")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-lname").send_keys("Keis")
-    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("cenobij493@runqx.com")
+    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("cenobijhgfhgd493@runqx.com")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-password").send_keys("Eitabkeis123#")
     driver.execute_script(
          "document.getElementsByName('dwfrm_profile_customer_registerTermsAndConditions')[0].setAttribute('checked', 'true')")
@@ -125,7 +125,7 @@ def test_incorrect_password(driver):
 
 # Test Case5 - Automate 'Search Product' feature of e-commerce website with Selenium
 def test_search_product(driver):
-    driver.get("https://www.newbalance.scom/")
+    driver.get("https://www.newbalance.com/")
     driver.find_element(By.ID, "continue-country").click()
     driver.find_element(By.CSS_SELECTOR,"li.linkAsset_item:nth-child(2) > a:nth-child(1)").click()
     time.sleep(2)
@@ -134,16 +134,18 @@ def test_search_product(driver):
     actions.move_to_element(e).click().perform()
     driver.find_element(By.CSS_SELECTOR,"#mrefinement-categories li:nth-child(4) .body-regular").click() #Accessories & Gear
     driver.find_element(By.CSS_SELECTOR,"#mrefinement-categories li:nth-child(4) .body-regular").click() # hat catagory
-    second_hat=driver.find_element(By.CSS_SELECTOR,"div.pgptiles:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)").text
+    driver.find_element(By.CSS_SELECTOR,"div.pgptiles:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)").click()
+    hat_name=driver.find_element(By.CSS_SELECTOR,"h1.font-header-1").text
     driver.find_element(By.CSS_SELECTOR, ".container > .site-search .form-control").clear()
     time.sleep(2)
-    driver.find_element(By.CSS_SELECTOR, ".container > .site-search .form-control").send_keys(second_hat)
+    driver.find_element(By.CSS_SELECTOR, ".container > .site-search .form-control").send_keys(hat_name)
     time.sleep(2)
     driver.find_element(By.CSS_SELECTOR,"a.button-primary").click()
     time.sleep(3)
-    hat_res=driver.find_element(By.XPATH,"/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div/div[4]/div[5]/div[1]/div/div/div[2]/div[1]/div[1]/div/a").text
+    driver.find_element(By.CSS_SELECTOR,".image-container > a:nth-child(1)").click()
+    hat_res=driver.find_element(By.CSS_SELECTOR,"h1.font-header-1").text
     time.sleep(3)
-    assert hat_res == second_hat
+    assert hat_res == hat_name
 
 
 # Test Case 6.1 - Automate end-to-end "Buy Product" feature of the e-commerce website.
@@ -183,6 +185,8 @@ def test_buy_product(driver):
     time.sleep(3)
     driver.find_element(By.LINK_TEXT, "Checkout").click()
     time.sleep(3)
+    driver.find_element(By.CSS_SELECTOR, ".mt-2 .form-control-label").click()
+    time.sleep(3)
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_firstName").clear()
     driver.find_element(By.NAME, "dwfrm_shipping_shippingAddress_addressFields_firstName").send_keys("Eitab")
     time.sleep(2)
@@ -207,10 +211,10 @@ def test_buy_product(driver):
     time.sleep(3)
     driver.find_element(By.NAME,"submit").click()
     time.sleep(3)
-    driver.find_element(By.CSS_SELECTOR, ".paypal-tab").click()
-    time.sleep(3)
-    driver.find_element(By.CSS_SELECTOR, ".paypal-button").click()
-    time.sleep(3)
+    # driver.find_element(By.CSS_SELECTOR, ".paypal-tab").click()
+    # time.sleep(3)
+    # driver.find_element(By.CSS_SELECTOR, ".paypal-button").click()
+    # time.sleep(3)
 
 # Test Case 6.2 - Verify that 'Add to Wishlist' only works after login..
 def test_add_to_wishlost(driver):
