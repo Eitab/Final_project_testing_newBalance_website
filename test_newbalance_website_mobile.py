@@ -211,6 +211,10 @@ def test_buy_product(driver):
     time.sleep(3)
     driver.find_element(By.NAME,"submit").click()
     time.sleep(3)
+    assert "checkout" in driver.title.lower()
+
+
+
     # driver.find_element(By.CSS_SELECTOR, ".paypal-tab").click()
     # time.sleep(3)
     # driver.find_element(By.CSS_SELECTOR, ".paypal-button").click()

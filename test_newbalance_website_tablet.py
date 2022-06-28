@@ -45,7 +45,7 @@ def test_registeration(driver):
     time.sleep(5)
     driver.find_element(By.CSS_SELECTOR, "#registration-form-fname").send_keys("Eitab")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-lname").send_keys("Keis")
-    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("cenhobik493@runqx.com")
+    driver.find_element(By.CSS_SELECTOR, "#registration-form-email").send_keys("cenhovcbik493@runqx.com")
     driver.find_element(By.CSS_SELECTOR, "#registration-form-password").send_keys("Eitabkeis123#")
     driver.execute_script(
         "document.getElementsByName('dwfrm_profile_customer_registerTermsAndConditions')[0].setAttribute('checked', 'true')")
@@ -209,6 +209,10 @@ def test_buy_product(driver):
     time.sleep(3)
     driver.find_element(By.NAME,"submit").click()
     time.sleep(3)
+    assert "checkout" in driver.title.lower()
+
+
+
     # driver.find_element(By.CSS_SELECTOR, ".paypal-tab").click()
     # time.sleep(3)
     # driver.find_element(By.CSS_SELECTOR, ".paypal-button").click()
